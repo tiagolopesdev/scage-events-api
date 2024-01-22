@@ -7,12 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Token\" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Google.Apis.YouTube.v3" Version="1.66.0.3205" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="Google.Apis.YouTube.v3" Version="1.66.0.3205" />
+	  <Folder Include="token.json\" />
 	</ItemGroup>
 
 </Project>
