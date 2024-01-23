@@ -18,11 +18,14 @@ namespace SCAGEEvents.Api.Build
 
         public static LiveBroadcastSnippet BuildLiveBroadcastSnippet(CreateLiveStreamDto liveStreamDto)
         {
+            //TODO -> Obter o channel ID através das variáveis de ambiente
+            //Environment.GetEnvironmentVariable("");
+
             return new LiveBroadcastSnippet()
             {
                 Title = liveStreamDto.Title,
                 Description = liveStreamDto.Description,
-                ChannelId = liveStreamDto.ChannelId,
+                ChannelId = "UCYuiMRv-pAEcPcqPAuUl_wg",
                 ScheduledStartTime = liveStreamDto.ScheduledStartTime
             };
         }

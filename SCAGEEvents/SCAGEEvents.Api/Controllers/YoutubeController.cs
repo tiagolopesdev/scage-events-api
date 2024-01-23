@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Apis.Upload;
+using Microsoft.AspNetCore.Mvc;
 using SCAGEEvents.Api.DTO;
 using SCAGEEvents.Api.IServices;
+using System.Net;
+using System.Text.Json;
 
 namespace SCAGEEvents.Api.Controllers
 {
@@ -16,12 +19,18 @@ namespace SCAGEEvents.Api.Controllers
         }
 
         [HttpPost("CreateLiveStream")]
-        [Produces("application/json")]
-        public async Task<IActionResult> CreateLiveStream([FromBody] CreateLiveStreamDto request)
+        [Produces("multipart/form-data")]
+        [ProducesResponseType(typeof(UploadStatus), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(UploadStatus), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateLiveStream([FromForm] RequestLiveStreamDto request)
         {
             try
             {
-                var eventCreated = await _youtubeService.CreateLiveStream(request);
+                CreateLiveStreamDto buildObject = JsonSerializer.Deserialize<CreateLiveStreamDto>(request.Fields);
+
+                buildObject.Thumbnails = request.Thumbnails;
+
+                var eventCreated = await _youtubeService.CreateLiveStream(buildObject);
 
                 return Ok(eventCreated);
             }

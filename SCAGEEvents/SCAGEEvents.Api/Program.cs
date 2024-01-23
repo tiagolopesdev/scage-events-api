@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using SCAGEEvents.Api.IServices;
 using SCAGEEvents.Api.Service;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,10 @@ builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAny
 // Add services to the container.
 builder.Services.AddScoped<IYoutubeService, YoutubeServiceChannel>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>

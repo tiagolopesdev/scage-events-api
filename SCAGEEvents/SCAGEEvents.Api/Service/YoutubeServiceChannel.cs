@@ -1,13 +1,16 @@
-﻿using Google.Apis.YouTube.v3;
+﻿using Google.Apis.Upload;
+using Google.Apis.YouTube.v3;
 using SCAGEEvents.Api.Build;
 using SCAGEEvents.Api.DTO;
+using SCAGEEvents.Api.Extension;
 using SCAGEEvents.Api.IServices;
+using SCAGEEvents.Api.Model;
 
 namespace SCAGEEvents.Api.Service
 {
     public class YoutubeServiceChannel : IYoutubeService
-    {      
-        public async Task<string> CreateLiveStream(CreateLiveStreamDto request)
+    {
+        public async Task<UploadStatus> CreateLiveStream(CreateLiveStreamDto request)
         {
             try
             {
@@ -19,13 +22,42 @@ namespace SCAGEEvents.Api.Service
 
                 var result = await resourceToRequest.ExecuteAsync();
 
-                //result.Id
+                var thumbnails = new InsertThumbnailsModel()
+                {
+                    LiveStreamId = result.Id,
+                    Thumbnails = request.Thumbnails,
+                    ContentTypeThumbnails = ManipulationFileExtension.CheckExtensionFile(request.Thumbnails)
+                };
 
-                throw new NotImplementedException();
+                return await InsertThumbnailsLiveStream(thumbnails);
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<UploadStatus> InsertThumbnailsLiveStream(InsertThumbnailsModel insertThumbnails)
+        {
+            try
+            {
+                YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
+
+                Stream fileConverted = await ConvertFileExtension.NewFileConvert(insertThumbnails.Thumbnails);
+
+                ThumbnailsResource.SetMediaUpload setMediaUpload = service.Thumbnails.Set(
+                    insertThumbnails.LiveStreamId,
+                    fileConverted,
+                    insertThumbnails.ContentTypeThumbnails
+                    );
+
+                var result = await setMediaUpload.UploadAsync();
+
+                return result.Status;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

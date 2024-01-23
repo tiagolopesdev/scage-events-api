@@ -1,16 +1,26 @@
 ﻿using SCAGEEvents.Api.VO;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace SCAGEEvents.Api.DTO
 {
+    public class RequestLiveStreamDto
+    {
+        [Required]
+        public string Fields { get; set; }
+        public IFormFile Thumbnails { get; set; }
+    }
     public class CreateLiveStreamDto
     {
-        [JsonIgnore]
-        public string? ChannelId { get; set; }  
+        [JsonPropertyName(name: "scheduledStartTime")]
         public DateTime ScheduledStartTime { get; set; }
+        [JsonPropertyName(name: "title")]
         public string Title { get; set; }
+        [JsonPropertyName(name: "description")]
         public string? Description { get; set; }
-        public StatusLive Status { get; set; }  
-        //public FileStream Thumbnails { get; set; }  
+        [JsonPropertyName(name: "status")]
+        public StatusLive Status { get; set; }
+        [JsonIgnore]
+        public IFormFile Thumbnails { get; set; }
     }
 }
