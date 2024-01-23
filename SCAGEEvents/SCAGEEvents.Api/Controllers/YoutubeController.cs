@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SCAGEEvents.Api.DTO;
 using SCAGEEvents.Api.IServices;
+using SCAGEEvents.Api.Utils;
 using System.Net;
 using System.Text.Json;
 
@@ -18,9 +19,9 @@ namespace SCAGEEvents.Api.Controllers
         }
 
         [HttpPost("CreateLiveStream")]
-        [Produces("multipart/form-data")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [Produces("multipart/form-data", "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest, "application/json")]
         public async Task<IActionResult> CreateLiveStream([FromForm] RequestLiveStreamDto request)
         {
             try
@@ -29,9 +30,9 @@ namespace SCAGEEvents.Api.Controllers
 
                 buildObject.Thumbnails = request.Thumbnails;
 
-                var eventCreated = await _youtubeService.CreateLiveStream(buildObject);
+                string eventCreated = await _youtubeService.CreateLiveStream(buildObject);
 
-                return Ok(eventCreated);
+                return Ok(ResponseApi.New("Live criada com sucesso", eventCreated));
             }
             catch (Exception ex)
             {
