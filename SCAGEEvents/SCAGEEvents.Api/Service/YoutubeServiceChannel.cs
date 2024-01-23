@@ -4,32 +4,33 @@ using SCAGEEvents.Api.Build;
 using SCAGEEvents.Api.DTO;
 using SCAGEEvents.Api.Extension;
 using SCAGEEvents.Api.IServices;
-using SCAGEEvents.Api.Model;
 
 namespace SCAGEEvents.Api.Service
 {
     public class YoutubeServiceChannel : IYoutubeService
     {
-        public async Task<UploadStatus> CreateLiveStream(CreateLiveStreamDto request)
+        private readonly IConfiguration _configuration;
+
+        public YoutubeServiceChannel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<string> CreateLiveStream(CreateLiveStreamDto request)
         {
             try
             {
                 YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
 
-                var objectBuilded = LiveBroadcastBuild.BuildLiveBroadCast(request);
+                var objectBuilded = new LiveBroadcastBuild(_configuration).BuildLiveBroadCast(request);
 
                 LiveBroadcastsResource.InsertRequest resourceToRequest = service.LiveBroadcasts.Insert(objectBuilded, "snippet,status");
 
                 var result = await resourceToRequest.ExecuteAsync();
 
-                var thumbnails = new InsertThumbnailsModel()
-                {
-                    LiveStreamId = result.Id,
-                    Thumbnails = request.Thumbnails,
-                    ContentTypeThumbnails = ManipulationFileExtension.CheckExtensionFile(request.Thumbnails)
-                };
+                InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
 
-                return await InsertThumbnailsLiveStream(thumbnails);
+                return result.Id;
             }
             catch (Exception ex)
             {
@@ -37,18 +38,20 @@ namespace SCAGEEvents.Api.Service
             }
         }
 
-        public async Task<UploadStatus> InsertThumbnailsLiveStream(InsertThumbnailsModel insertThumbnails)
+        public async Task<UploadStatus> InsertThumbnailsLiveStream(IFormFile formFile, string liveStreamId)
         {
             try
             {
                 YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
 
-                Stream fileConverted = await ConvertFileExtension.NewFileConvert(insertThumbnails.Thumbnails);
+                Stream fileConverted = await ConvertFileExtension.NewFileConvert(formFile);
+
+                string extensionChecked = CheckExtensionFile.CheckThumbnailsExtension(formFile);
 
                 ThumbnailsResource.SetMediaUpload setMediaUpload = service.Thumbnails.Set(
-                    insertThumbnails.LiveStreamId,
+                    liveStreamId,
                     fileConverted,
-                    insertThumbnails.ContentTypeThumbnails
+                    extensionChecked
                     );
 
                 var result = await setMediaUpload.UploadAsync();

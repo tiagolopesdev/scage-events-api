@@ -4,9 +4,16 @@ using SCAGEEvents.Api.VO;
 
 namespace SCAGEEvents.Api.Build
 {
-    public static class LiveBroadcastBuild
+    public class LiveBroadcastBuild
     {
-        public static LiveBroadcast BuildLiveBroadCast(CreateLiveStreamDto liveStreamDto)
+        private string ChannelIdEnviroment;
+
+        public LiveBroadcastBuild(IConfiguration configuration)
+        {
+            ChannelIdEnviroment = configuration.GetValue<string>("YoutubeEnviroments:ChannelId"); ;
+        }
+
+        public LiveBroadcast BuildLiveBroadCast(CreateLiveStreamDto liveStreamDto)
         {
             return new LiveBroadcast()
             {
@@ -16,16 +23,13 @@ namespace SCAGEEvents.Api.Build
             };
         }
 
-        public static LiveBroadcastSnippet BuildLiveBroadcastSnippet(CreateLiveStreamDto liveStreamDto)
+        public LiveBroadcastSnippet BuildLiveBroadcastSnippet(CreateLiveStreamDto liveStreamDto)
         {
-            //TODO -> Obter o channel ID através das variáveis de ambiente
-            //Environment.GetEnvironmentVariable("");
-
             return new LiveBroadcastSnippet()
             {
                 Title = liveStreamDto.Title,
                 Description = liveStreamDto.Description,
-                ChannelId = "UCYuiMRv-pAEcPcqPAuUl_wg",
+                ChannelId = ChannelIdEnviroment,
                 ScheduledStartTime = liveStreamDto.ScheduledStartTime
             };
         }

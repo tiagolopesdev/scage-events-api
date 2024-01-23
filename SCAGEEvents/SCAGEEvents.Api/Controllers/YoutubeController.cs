@@ -1,5 +1,4 @@
-﻿using Google.Apis.Upload;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SCAGEEvents.Api.DTO;
 using SCAGEEvents.Api.IServices;
 using System.Net;
@@ -20,8 +19,8 @@ namespace SCAGEEvents.Api.Controllers
 
         [HttpPost("CreateLiveStream")]
         [Produces("multipart/form-data")]
-        [ProducesResponseType(typeof(UploadStatus), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(UploadStatus), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateLiveStream([FromForm] RequestLiveStreamDto request)
         {
             try

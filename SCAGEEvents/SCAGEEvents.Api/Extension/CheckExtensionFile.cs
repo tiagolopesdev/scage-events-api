@@ -1,10 +1,9 @@
-﻿using System.IO;
-
+﻿
 namespace SCAGEEvents.Api.Extension
 {
-    public static class ManipulationFileExtension
+    public static class CheckExtensionFile
     {
-        public static string CheckExtensionFile(IFormFile formFile)
+        public static string CheckThumbnailsExtension(IFormFile formFile)
         {
             string result = Path.GetExtension(formFile.FileName);
 

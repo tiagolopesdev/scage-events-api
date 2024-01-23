@@ -15,8 +15,6 @@ namespace SCAGEEvents.Api.Build
                 //DriveService.Scope.Drive
             };
 
-            string applicationName = "Pascom System Scale";
-
             UserCredential credential;
 
             using (var stream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "Credential", "credential.json"), FileMode.Open, FileAccess.Read))
@@ -34,7 +32,7 @@ namespace SCAGEEvents.Api.Build
             return new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = applicationName
+                ApplicationName = "Pascom System Scale"
             };
         }
     }
