@@ -57,5 +57,23 @@ namespace SCAGEEvents.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("DeleteLiveStream")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.NotFound, "application/json")]
+        public async Task<IActionResult> DeleteLiveStream([FromQuery] string id)
+        {
+            try
+            {
+                string eventCreated = await _youtubeService.DeleteLiveStream(id);
+
+                return Ok(ResponseApi.New("Live excluída com sucesso", eventCreated));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

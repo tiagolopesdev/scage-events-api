@@ -39,6 +39,22 @@ namespace SCAGEEvents.Api.Service
             }
         }
 
+        public async Task<string> DeleteLiveStream(string id)
+        {
+            try
+            {
+                YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
+
+                LiveBroadcastsResource.DeleteRequest resourceToRequest = service.LiveBroadcasts.Delete(id);
+
+                return await resourceToRequest.ExecuteAsync();
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<LiveBroadcast> GetLiveStreamById(string id)
         {
             try

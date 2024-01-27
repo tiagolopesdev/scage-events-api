@@ -9,5 +9,6 @@ namespace SCAGEEvents.Api.IServices
         public Task<UploadStatus> InsertThumbnailsLiveStream(IFormFile formFile, string liveStreamId);
         public Task<string> CreateLiveStream(CreateLiveStreamDto request);
         public Task<LiveBroadcast> GetLiveStreamById(string id);
+        public Task<string> DeleteLiveStream(string id);
     }
 }
