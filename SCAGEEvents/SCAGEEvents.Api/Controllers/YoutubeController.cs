@@ -18,6 +18,24 @@ namespace SCAGEEvents.Api.Controllers
             _youtubeService = youtubeService;
         }
 
+        [HttpGet("GetLiveById")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest, "application/json")]
+        public async Task<IActionResult> CreateLiveStream([FromQuery] string id)
+        {
+            try
+            {
+                var eventCreated = await _youtubeService.GetLiveStreamById(id);
+
+                return Ok(ResponseApi.New("Live criada com sucesso", eventCreated));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("CreateLiveStream")]
         [Produces("multipart/form-data", "application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]

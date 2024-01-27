@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Upload;
 using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
 using SCAGEEvents.Api.Build;
 using SCAGEEvents.Api.DTO;
 using SCAGEEvents.Api.Extension;
@@ -31,6 +32,27 @@ namespace SCAGEEvents.Api.Service
                 InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
 
                 return result.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<LiveBroadcast> GetLiveStreamById(string id)
+        {
+            try
+            {
+                YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
+
+
+                LiveBroadcastsResource.ListRequest resourceToRequest = service.LiveBroadcasts.List("id,snippet,status");
+
+                resourceToRequest.Id = id;
+
+                var result = await resourceToRequest.ExecuteAsync();
+               
+                return result.Items.FirstOrDefault();
             }
             catch (Exception ex)
             {
