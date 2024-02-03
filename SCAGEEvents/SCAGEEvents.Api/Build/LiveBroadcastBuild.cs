@@ -6,24 +6,28 @@ namespace SCAGEEvents.Api.Build
 {
     public class LiveBroadcastBuild
     {
-        private string ChannelIdEnviroment;
+        private readonly string ChannelIdEnviroment;
 
         public LiveBroadcastBuild(IConfiguration configuration)
         {
-            ChannelIdEnviroment = configuration.GetValue<string>("YoutubeEnviroments:ChannelId"); ;
+            ChannelIdEnviroment = configuration.GetValue<string>("YoutubeEnviroments:ChannelId");
         }
 
-        public LiveBroadcast BuildLiveBroadCast(CreateLiveStreamDto liveStreamDto)
+        public LiveBroadcast BuildLiveBroadCast(LiveStreamDto liveStreamDto)
         {
-            return new LiveBroadcast()
+            var objectToReturn = new LiveBroadcast()
             {
                 Kind = "youtube#liveBroadcast",
                 Snippet = BuildLiveBroadcastSnippet(liveStreamDto),
                 Status = BuildLiveBroadcastStatus(liveStreamDto.Status)
             };
+
+            if (!string.IsNullOrEmpty(liveStreamDto.Id)) objectToReturn.Id = liveStreamDto.Id;
+
+            return objectToReturn;
         }
 
-        public LiveBroadcastSnippet BuildLiveBroadcastSnippet(CreateLiveStreamDto liveStreamDto)
+        public LiveBroadcastSnippet BuildLiveBroadcastSnippet(LiveStreamDto liveStreamDto)
         {
             return new LiveBroadcastSnippet()
             {

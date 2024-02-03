@@ -17,7 +17,7 @@ namespace SCAGEEvents.Api.Service
             _configuration = configuration;
         }
 
-        public async Task<string> CreateLiveStream(CreateLiveStreamDto request)
+        public async Task<string> CreateLiveStream(LiveStreamDto request)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace SCAGEEvents.Api.Service
                 LiveBroadcastsResource.DeleteRequest resourceToRequest = service.LiveBroadcasts.Delete(id);
 
                 return await resourceToRequest.ExecuteAsync();
-            } 
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -67,8 +67,30 @@ namespace SCAGEEvents.Api.Service
                 resourceToRequest.Id = id;
 
                 var result = await resourceToRequest.ExecuteAsync();
-               
+
                 return result.Items.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<string> UpdateLiveStream(LiveStreamDto request)
+        {
+            try
+            {
+                YouTubeService service = new(await ConnectionGloogleService.ConnectGoogle());
+
+                var objectBuilded = new LiveBroadcastBuild(_configuration).BuildLiveBroadCast(request);
+
+                LiveBroadcastsResource.UpdateRequest resourceToRequest = service.LiveBroadcasts.Update(objectBuilded, "id,snippet,status");
+
+                var result = await resourceToRequest.ExecuteAsync();
+
+                InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
+
+                return result.Id;
             }
             catch (Exception ex)
             {

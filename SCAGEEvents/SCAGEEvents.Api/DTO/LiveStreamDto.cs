@@ -1,17 +1,12 @@
 ﻿using SCAGEEvents.Api.VO;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace SCAGEEvents.Api.DTO
 {
-    public class RequestLiveStreamDto
+    public class LiveStreamDto
     {
-        [Required]
-        public string Fields { get; set; }
-        public IFormFile Thumbnails { get; set; }
-    }
-    public class CreateLiveStreamDto
-    {
+        [JsonPropertyName(name: "id")]
+        public string? Id { get; set; }
         [JsonPropertyName(name: "scheduledStartTime")]
         public DateTime ScheduledStartTime { get; set; }
         [JsonPropertyName(name: "title")]

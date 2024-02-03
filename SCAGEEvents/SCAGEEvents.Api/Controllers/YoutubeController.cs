@@ -44,13 +44,35 @@ namespace SCAGEEvents.Api.Controllers
         {
             try
             {
-                CreateLiveStreamDto buildObject = JsonSerializer.Deserialize<CreateLiveStreamDto>(request.Fields);
+                LiveStreamDto buildObject = JsonSerializer.Deserialize<LiveStreamDto>(request.Fields);
 
                 buildObject.Thumbnails = request.Thumbnails;
 
                 string eventCreated = await _youtubeService.CreateLiveStream(buildObject);
 
                 return Ok(ResponseApi.New("Live criada com sucesso", eventCreated));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("UpdateLiveStream")]
+        [Produces("multipart/form-data", "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest, "application/json")]
+        public async Task<IActionResult> UpdateLiveStream([FromForm] RequestLiveStreamDto request)
+        {
+            try
+            {
+                LiveStreamDto buildObject = JsonSerializer.Deserialize<LiveStreamDto>(request.Fields);
+
+                buildObject.Thumbnails = request.Thumbnails;
+
+                string eventCreated = await _youtubeService.UpdateLiveStream(buildObject);
+
+                return Ok(ResponseApi.New("Live atualizada com sucesso", eventCreated));
             }
             catch (Exception ex)
             {
