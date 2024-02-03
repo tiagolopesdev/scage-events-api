@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SCAGEEvents", "SCAGEEvents"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCAGEEvents.Api", "SCAGEEvents\SCAGEEvents.Api\SCAGEEvents.Api.csproj", "{515A714D-874C-4DC0-8F55-8664754A7471}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCAGEEvents.Application", "SCAGEEvents\SCAGEEvents.Application\SCAGEEvents.Application.csproj", "{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{515A714D-874C-4DC0-8F55-8664754A7471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{515A714D-874C-4DC0-8F55-8664754A7471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{515A714D-874C-4DC0-8F55-8664754A7471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{515A714D-874C-4DC0-8F55-8664754A7471} = {00B730F8-882B-4F8F-BB43-52EDF13ED1CB}
+		{5F7DCFA9-CEDC-4C3A-B297-7BDD17710852} = {00B730F8-882B-4F8F-BB43-52EDF13ED1CB}
 	EndGlobalSection
 EndGlobal
