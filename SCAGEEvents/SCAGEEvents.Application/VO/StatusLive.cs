@@ -1,4 +1,4 @@
-﻿namespace SCAGEEvents.Api.VO
+﻿namespace SCAGEEvents.Application.VO
 {
     public enum StatusLive
     {

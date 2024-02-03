@@ -1,7 +1,8 @@
-﻿using SCAGEEvents.Api.VO;
+﻿using Microsoft.AspNetCore.Http;
+using SCAGEEvents.Application.VO;
 using System.Text.Json.Serialization;
 
-namespace SCAGEEvents.Api.DTO
+namespace SCAGEEvents.Application.DTO
 {
     public class LiveStreamDto
     {

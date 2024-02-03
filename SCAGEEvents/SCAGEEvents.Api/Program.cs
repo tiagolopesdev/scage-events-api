@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
-using SCAGEEvents.Api.IServices;
-using SCAGEEvents.Api.Service;
+using SCAGEEvents.Application.IServices;
+using SCAGEEvents.Application.Service;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

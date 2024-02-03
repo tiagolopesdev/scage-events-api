@@ -1,4 +1,4 @@
-﻿namespace SCAGEEvents.Api.Utils
+﻿namespace SCAGEEvents.Application.Utils
 {
     public class ResponseApi
     {

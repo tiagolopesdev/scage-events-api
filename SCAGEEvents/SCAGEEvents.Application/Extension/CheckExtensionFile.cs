@@ -1,5 +1,6 @@
-﻿
-namespace SCAGEEvents.Api.Extension
+﻿using Microsoft.AspNetCore.Http;
+
+namespace SCAGEEvents.Application.Extension
 {
     public static class CheckExtensionFile
     {
@@ -14,6 +15,6 @@ namespace SCAGEEvents.Api.Extension
                 ".jpg" => "image/jpeg",
                 _ => throw new Exception("A extensão das miniaturas deve ser .png, .jpeg ou .jpg")
             };
-        }        
+        }
     }
 }

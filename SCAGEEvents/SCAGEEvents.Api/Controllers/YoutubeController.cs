@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SCAGEEvents.Api.DTO;
-using SCAGEEvents.Api.IServices;
-using SCAGEEvents.Api.Utils;
+using SCAGEEvents.Application.DTO;
+using SCAGEEvents.Application.IServices;
+using SCAGEEvents.Application.Utils;
 using System.Net;
 using System.Text.Json;
 

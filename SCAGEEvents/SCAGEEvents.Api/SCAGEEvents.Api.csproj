@@ -15,4 +15,8 @@
 	  <Folder Include="token.json\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\SCAGEEvents.Application\SCAGEEvents.Application.csproj" />
+	</ItemGroup>
+
 </Project>

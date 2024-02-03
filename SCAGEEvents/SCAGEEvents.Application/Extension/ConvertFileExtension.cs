@@ -1,4 +1,6 @@
-﻿namespace SCAGEEvents.Api.Extension
+﻿using Microsoft.AspNetCore.Http;
+
+namespace SCAGEEvents.Application.Extension
 {
     public class ConvertFileExtension
     {
@@ -11,13 +13,13 @@
         {
             get
             {
-                return Path.GetExtension(this.Name);
+                return Path.GetExtension(Name);
             }
         }
 
         public ConvertFileExtension()
         {
-            this.Content = (Stream)new MemoryStream();
+            Content = new MemoryStream();
         }
 
         public static async Task<Stream> NewFileConvert(IFormFile formFile)

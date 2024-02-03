@@ -1,8 +1,9 @@
 ﻿using Google.Apis.YouTube.v3.Data;
-using SCAGEEvents.Api.DTO;
-using SCAGEEvents.Api.VO;
+using Microsoft.Extensions.Configuration;
+using SCAGEEvents.Application.DTO;
+using SCAGEEvents.Application.VO;
 
-namespace SCAGEEvents.Api.Build
+namespace SCAGEEvents.Application.Extension
 {
     public class LiveBroadcastBuild
     {

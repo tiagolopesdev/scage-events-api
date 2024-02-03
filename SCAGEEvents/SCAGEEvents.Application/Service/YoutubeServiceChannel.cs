@@ -1,12 +1,14 @@
 ﻿using Google.Apis.Upload;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-using SCAGEEvents.Api.Build;
-using SCAGEEvents.Api.DTO;
-using SCAGEEvents.Api.Extension;
-using SCAGEEvents.Api.IServices;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using SCAGEEvents.Application.Build;
+using SCAGEEvents.Application.DTO;
+using SCAGEEvents.Application.Extension;
+using SCAGEEvents.Application.IServices;
 
-namespace SCAGEEvents.Api.Service
+namespace SCAGEEvents.Application.Service
 {
     public class YoutubeServiceChannel : IYoutubeService
     {

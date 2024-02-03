@@ -1,8 +1,9 @@
 ﻿using Google.Apis.Upload;
 using Google.Apis.YouTube.v3.Data;
-using SCAGEEvents.Api.DTO;
+using Microsoft.AspNetCore.Http;
+using SCAGEEvents.Application.DTO;
 
-namespace SCAGEEvents.Api.IServices
+namespace SCAGEEvents.Application.IServices
 {
     public interface IYoutubeService
     {
