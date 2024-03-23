@@ -22,7 +22,7 @@ namespace SCAGEEvents.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK, "application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest, "application/json")]
-        public async Task<IActionResult> CreateLiveStream([FromQuery] string id)
+        public async Task<IActionResult> GetLiveStreamById([FromQuery] string id)
         {
             try
             {
