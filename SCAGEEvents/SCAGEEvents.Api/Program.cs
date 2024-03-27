@@ -35,26 +35,18 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseSwagger();
-
 app.UseSwaggerUI(opt =>
 {
     opt.RoutePrefix = string.Empty;
     opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 });
 
-app.UseRouting();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();       
-});
-
 app.UseCors();
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
-//app.MapControllers();
+app.MapControllers();
 
 app.Run();

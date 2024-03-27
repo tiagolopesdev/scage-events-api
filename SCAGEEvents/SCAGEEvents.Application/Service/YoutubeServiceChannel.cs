@@ -1,8 +1,10 @@
-﻿using Google.Apis.Upload;
+﻿using Dapper;
+using Google.Apis.Upload;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using MySqlConnector;
 using SCAGEEvents.Application.Build;
 using SCAGEEvents.Application.DTO;
 using SCAGEEvents.Application.Extension;
@@ -13,6 +15,7 @@ namespace SCAGEEvents.Application.Service
     public class YoutubeServiceChannel : IYoutubeService
     {
         private readonly IConfiguration _configuration;
+        private string ConnectionString { get { return _configuration.GetConnectionString("DefaultConnection"); } }
 
         public YoutubeServiceChannel(IConfiguration configuration)
         {
@@ -31,7 +34,8 @@ namespace SCAGEEvents.Application.Service
 
                 var result = await resourceToRequest.ExecuteAsync();
 
-                InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
+                await InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
+                UpdateDay(result.Id, request.DayId);
 
                 return result.Id;
             }
@@ -91,12 +95,42 @@ namespace SCAGEEvents.Application.Service
                 var result = await resourceToRequest.ExecuteAsync();
 
                 InsertThumbnailsLiveStream(request.Thumbnails, result.Id);
+                UpdateDay(result.Id, request.DayId);
 
                 return result.Id;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Guid> UpdateDay(string liveStream, Guid dayId)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var response = await connection.ExecuteAsync(
+                        "UPDATE day SET " +
+                            "liveStreamId = @liveStream, " +
+                            "modifiedOn = @modifiedOn, " +
+                            "modifiedBy = @modifiedBy " +
+                        "WHERE id = @dayId",
+                        new
+                        {
+                            liveStream,
+                            dayId,
+                            modifiedOn = DateTime.Now,
+                            modifiedBy = Guid.NewGuid().ToString()
+                        });
+
+                    return response == 1 ? dayId : Guid.Empty;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 

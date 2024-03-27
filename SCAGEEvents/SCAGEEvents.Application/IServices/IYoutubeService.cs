@@ -7,6 +7,7 @@ namespace SCAGEEvents.Application.IServices
 {
     public interface IYoutubeService
     {
+        public Task<Guid> UpdateDay(string liveStream, Guid dayId);
         public Task<UploadStatus> InsertThumbnailsLiveStream(IFormFile formFile, string liveStreamId);
         public Task<string> CreateLiveStream(LiveStreamDto request);
         public Task<LiveBroadcast> GetLiveStreamById(string id);
